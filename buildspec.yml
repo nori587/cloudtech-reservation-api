@@ -28,7 +28,7 @@ phases:
 
       # imagedefinitions.json の作成
       - echo "Creating imagedefinitions.json..."
-      - printf '[{"name":"api-container","imageUri":"%s"}]' "${ECR_IMAGE_URI}" > imagedefinitions.json
+      - printf '[{"name":"cth2-con","imageUri":"%s"}]' "${ECR_IMAGE_URI}" > imagedefinitions.json
       - cat imagedefinitions.json  # 作成したファイルを確認
 artifacts:
   files:
