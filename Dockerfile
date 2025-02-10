@@ -1,9 +1,5 @@
 # ベースイメージを指定
-<<<<<<< HEAD
 FROM golang:1.18 AS builder
-=======
-FROM golang:1.18 AS builder
->>>>>>> d4028f8 (first commit)
 
 # ワーキングディレクトリを設定
 WORKDIR /app
