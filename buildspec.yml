@@ -2,23 +2,34 @@ version: 0.2
 env:
   variables:
     ECR_REPO_NAME: api-repository
+    AWS_REGION: ap-northeast-1  # 必要に応じて変更
 phases:
   pre_build:
     commands:
-      - echo "hello"
+      - echo "Starting pre-build phase..."
       
-      #ECR login
+      # ECRのURIを設定
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
       - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      
+      # ECRへログイン
       - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_MAIN_URI}
 
       - ECR_IMAGE_URI="${ECR_MAIN_URI}/${ECR_REPO_NAME}:latest"
   build:
     commands:
+      - echo "Building Docker image..."
       - docker build -t ${ECR_REPO_NAME}:latest .
   post_build:
     commands:
+      - echo "Tagging and pushing Docker image..."
       - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
       - docker push ${ECR_IMAGE_URI}
+
+      # imagedefinitions.json の作成
+      - echo "Creating imagedefinitions.json..."
+      - printf '[{"name":"api-container","imageUri":"%s"}]' "${ECR_IMAGE_URI}" > imagedefinitions.json
+      - cat imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
