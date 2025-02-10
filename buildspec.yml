@@ -19,3 +19,6 @@ phases:
     commands:
       - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
       - docker push ${ECR_IMAGE_URI}
+artifacts:
+  files:
+    - imagedefinitions.json
