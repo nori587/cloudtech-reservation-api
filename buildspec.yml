@@ -8,7 +8,7 @@ phases:
     commands:
       - echo "Starting pre-build phase..."
       
-      # ECRのURIを設定
+      # AWS_ACCOUNT_ID の取得
       - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
       - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
       
@@ -29,7 +29,8 @@ phases:
       # imagedefinitions.json の作成
       - echo "Creating imagedefinitions.json..."
       - printf '[{"name":"api-container","imageUri":"%s"}]' "${ECR_IMAGE_URI}" > imagedefinitions.json
-      - cat imagedefinitions.json
+      - cat imagedefinitions.json  # 作成したファイルを確認
 artifacts:
   files:
     - imagedefinitions.json
+
