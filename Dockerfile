@@ -7,7 +7,7 @@ WORKDIR /app
 # Goの依存関係を管理するためのファイルをコピー
 COPY go.mod go.sum ./
 
-# 依存関係をダウンロード
+# 依存関係をダウンロードする
 RUN go mod download
 
 # ソースコードをコピー
