@@ -13,7 +13,7 @@ RUN go mod download
 # ソースコードをコピー
 COPY . .
 
-# 実行可能ファイルをビルド
+# 実行可能ファイルをビルドする
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 
 # 実行ステージ
