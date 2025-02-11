@@ -11,6 +11,9 @@ phases:
 
   build:
     commands:
+      - echo "Pulling base images to avoid rate limiting..."
+      - docker pull golang:1.18
+      - docker pull alpine:latest
       - echo "Building Docker image..."
       - docker build -t ${ECR_REPO_NAME}:latest .
       - docker tag ${ECR_REPO_NAME}:latest ${ECR_IMAGE_URI}
